@@ -2,23 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_wordpad/colors.dart';
 import 'package:flutter_wordpad/repository/auth_repository.dart';
-import 'package:flutter_wordpad/screens/home_screen.dart';
+import 'package:routemaster/routemaster.dart';
 
 class LoginScreen extends ConsumerWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   void signInWithGoogle(WidgetRef ref, BuildContext context) async {
     final sMessenger = ScaffoldMessenger.of(context);
-    final navigator = Navigator.of(context);
+    final navigator = Routemaster.of(context);
     final errorModel =
-        await ref.watch(authRepositoryProvider).signInWithGoogle();
+        await ref.read(authRepositoryProvider).signInWithGoogle();
     if (errorModel.error == null) {
       ref.read(userProvider.notifier).update((state) => errorModel.data);
-      navigator.push(
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
+      navigator.replace('/');
     } else {
       sMessenger.showSnackBar(
         SnackBar(
@@ -39,8 +35,10 @@ class LoginScreen extends ConsumerWidget {
             height: 20,
           ),
           label: const Text(
-            'sign in with google',
-            style: TextStyle(color: kBlackColor),
+            'Sign in with Google',
+            style: TextStyle(
+              color: kBlackColor,
+            ),
           ),
           style: ElevatedButton.styleFrom(
             backgroundColor: kWhiteColor,
