@@ -35,6 +35,10 @@ class HomeScreen extends ConsumerWidget {
     }
   }
 
+  void navigateToDocument(BuildContext context, String documentId) {
+    Routemaster.of(context).push('/document/$documentId');
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -68,21 +72,25 @@ class HomeScreen extends ConsumerWidget {
           }
 
           return Center(
-            child: SizedBox(
+            child: Container(
               width: 600,
+              margin: const EdgeInsets.only(top: 10),
               child: ListView.builder(
                 itemCount: snapshot.data!.data.length,
                 itemBuilder: (context, index) {
                   DocumentModel document = snapshot.data!.data[index];
 
-                  return SizedBox(
-                    height: 50,
-                    child: Card(
-                      child: Center(
-                        child: Text(
-                          document.title,
-                          style: const TextStyle(
-                            fontSize: 17,
+                  return InkWell(
+                    onTap: () => navigateToDocument(context, document.id),
+                    child: SizedBox(
+                      height: 50,
+                      child: Card(
+                        child: Center(
+                          child: Text(
+                            document.title,
+                            style: const TextStyle(
+                              fontSize: 17,
+                            ),
                           ),
                         ),
                       ),
