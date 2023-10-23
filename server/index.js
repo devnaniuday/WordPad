@@ -14,7 +14,7 @@ app.use(authRouter);
 app.use(documentRouter);
 
 const DB =
-  "mongodb+srv://udaydevnani:8866@cluster0.lfcsfgs.mongodb.net/?retryWrites=true&w=majority";
+  "Your Mongo Connect URL";
 
 mongoose
   .connect(DB)
